@@ -105,11 +105,18 @@ def get_right_result_link(soup):
 def get_details_from_first_result(soup):
 	name = soup.select('div.g h3.r a')[0].getText()
 	link = soup.select('div.kv cite')[0].getText()
-	if 'shiksha' in link or 'collegedunia' in link or 'careers360' in link or 'getmyuni' in link:
-		link = soup.select('div.kv cite')[1].getText()
+	try:
 		if 'shiksha' in link or 'collegedunia' in link or 'careers360' in link or 'getmyuni' in link:
-			link = soup.select('div.kv cite')[2].getText()
-	return (name, link.split('/')[2])
+			link = soup.select('div.kv cite')[1].getText()
+			if 'shiksha' in link or 'collegedunia' in link or 'careers360' in link or 'getmyuni' in link:
+				link = soup.select('div.kv cite')[2].getText()
+	except:
+		pass
+	try:
+		finalurl = link.split('/')[2]
+	except:
+		pass
+	return (name, finalurl)
     
 def google_result(college_name, recurse=0):
 #     college_name = clean_name(college_name)
